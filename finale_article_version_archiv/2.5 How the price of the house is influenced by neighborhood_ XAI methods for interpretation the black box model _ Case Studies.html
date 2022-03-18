@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<!-- saved from url=(0158)https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html -->
+<html lang="" xml:lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>2.5 How the price of the house is influenced by neighborhood? XAI methods for interpretation the black box model | Case Studies</title>
+  <meta name="description" content="Case studies in machine learning.">
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7">
+
+  <meta property="og:title" content="2.5 How the price of the house is influenced by neighborhood? XAI methods for interpretation the black box model | Case Studies">
+  <meta property="og:type" content="book">
+  
+  <meta property="og:image" content="/images/cover.png">
+  <meta property="og:description" content="Case studies in machine learning.">
+  <meta name="github-repo" content="mini-pw/2021L-WB-Book">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="2.5 How the price of the house is influenced by neighborhood? XAI methods for interpretation the black box model | Case Studies">
+  
+  <meta name="twitter:description" content="Case studies in machine learning.">
+  <meta name="twitter:image" content="/images/cover.png">
+
+<meta name="author" content="Faculty of Mathematics and Information Science, Warsaw University of Technology">
+
+
+<meta name="date" content="2021-06-16">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html">
+<link rel="next" href="https://mi2-education.github.io/2021L-WB-Book/deep-learning-1.html">
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/header-attrs.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/jquery.min.js.pobrane"></script>
+<link href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/style.css" rel="stylesheet">
+<link href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-table.css" rel="stylesheet">
+<link href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-bookdown.css" rel="stylesheet">
+<link href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-highlight.css" rel="stylesheet">
+<link href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-search.css" rel="stylesheet">
+<link href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-fontsettings.css" rel="stylesheet">
+<link href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-clipboard.css" rel="stylesheet">
+
+
+
+
+
+
+
+
+
+<link href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/anchor-sections.css" rel="stylesheet">
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/anchor-sections.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/kePrint.js.pobrane"></script>
+<link href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/lightable.css" rel="stylesheet">
+
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/style(1).css" type="text/css">
+<script type="text/javascript" src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/MathJax.js.pobrane"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.mjx-chtml {display: inline-block; line-height: 0; text-indent: 0; text-align: left; text-transform: none; font-style: normal; font-weight: normal; font-size: 100%; font-size-adjust: none; letter-spacing: normal; word-wrap: normal; word-spacing: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; margin: 0; padding: 1px 0}
+.MJXc-display {display: block; text-align: center; margin: 1em 0; padding: 0}
+.mjx-chtml[tabindex]:focus, body :focus .mjx-chtml[tabindex] {display: inline-table}
+.mjx-full-width {text-align: center; display: table-cell!important; width: 10000em}
+.mjx-math {display: inline-block; border-collapse: separate; border-spacing: 0}
+.mjx-math * {display: inline-block; -webkit-box-sizing: content-box!important; -moz-box-sizing: content-box!important; box-sizing: content-box!important; text-align: left}
+.mjx-numerator {display: block; text-align: center}
+.mjx-denominator {display: block; text-align: center}
+.MJXc-stacked {height: 0; position: relative}
+.MJXc-stacked > * {position: absolute}
+.MJXc-bevelled > * {display: inline-block}
+.mjx-stack {display: inline-block}
+.mjx-op {display: block}
+.mjx-under {display: table-cell}
+.mjx-over {display: block}
+.mjx-over > * {padding-left: 0px!important; padding-right: 0px!important}
+.mjx-under > * {padding-left: 0px!important; padding-right: 0px!important}
+.mjx-stack > .mjx-sup {display: block}
+.mjx-stack > .mjx-sub {display: block}
+.mjx-prestack > .mjx-presup {display: block}
+.mjx-prestack > .mjx-presub {display: block}
+.mjx-delim-h > .mjx-char {display: inline-block}
+.mjx-surd {vertical-align: top}
+.mjx-mphantom * {visibility: hidden}
+.mjx-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 2px 3px; font-style: normal; font-size: 90%}
+.mjx-annotation-xml {line-height: normal}
+.mjx-menclose > svg {fill: none; stroke: currentColor}
+.mjx-mtr {display: table-row}
+.mjx-mlabeledtr {display: table-row}
+.mjx-mtd {display: table-cell; text-align: center}
+.mjx-label {display: table-row}
+.mjx-box {display: inline-block}
+.mjx-block {display: block}
+.mjx-span {display: inline}
+.mjx-char {display: block; white-space: pre}
+.mjx-itable {display: inline-table; width: auto}
+.mjx-row {display: table-row}
+.mjx-cell {display: table-cell}
+.mjx-table {display: table; width: 100%}
+.mjx-line {display: block; height: 0}
+.mjx-strut {width: 0; padding-top: 1em}
+.mjx-vsize {width: 0}
+.MJXc-space1 {margin-left: .167em}
+.MJXc-space2 {margin-left: .222em}
+.MJXc-space3 {margin-left: .278em}
+.mjx-chartest {display: block; visibility: hidden; position: absolute; top: 0; line-height: normal; font-size: 500%}
+.mjx-chartest .mjx-char {display: inline}
+.mjx-chartest .mjx-box {padding-top: 1000px}
+.MJXc-processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MJXc-processed {display: none}
+.mjx-test {display: block; font-style: normal; font-weight: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow: hidden; height: 1px}
+.mjx-ex-box-test {position: absolute; overflow: hidden; width: 1px; height: 60ex}
+.mjx-line-box-test {display: table!important}
+.mjx-line-box-test span {display: table-cell!important; width: 10000em!important; min-width: 0; max-width: none; padding: 0; border: 0; margin: 0}
+#MathJax_CHTML_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.mjx-chtml .mjx-noError {line-height: 1.2; vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+.MJXc-TeX-unknown-R {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: normal; font-weight: normal}
+.MJXc-TeX-unknown-I {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: italic; font-weight: normal}
+.MJXc-TeX-unknown-B {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: normal; font-weight: bold}
+.MJXc-TeX-unknown-BI {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: italic; font-weight: bold}
+.MJXc-TeX-ams-R {font-family: MJXc-TeX-ams-R,MJXc-TeX-ams-Rw}
+.MJXc-TeX-cal-B {font-family: MJXc-TeX-cal-B,MJXc-TeX-cal-Bx,MJXc-TeX-cal-Bw}
+.MJXc-TeX-frak-R {font-family: MJXc-TeX-frak-R,MJXc-TeX-frak-Rw}
+.MJXc-TeX-frak-B {font-family: MJXc-TeX-frak-B,MJXc-TeX-frak-Bx,MJXc-TeX-frak-Bw}
+.MJXc-TeX-math-BI {font-family: MJXc-TeX-math-BI,MJXc-TeX-math-BIx,MJXc-TeX-math-BIw}
+.MJXc-TeX-sans-R {font-family: MJXc-TeX-sans-R,MJXc-TeX-sans-Rw}
+.MJXc-TeX-sans-B {font-family: MJXc-TeX-sans-B,MJXc-TeX-sans-Bx,MJXc-TeX-sans-Bw}
+.MJXc-TeX-sans-I {font-family: MJXc-TeX-sans-I,MJXc-TeX-sans-Ix,MJXc-TeX-sans-Iw}
+.MJXc-TeX-script-R {font-family: MJXc-TeX-script-R,MJXc-TeX-script-Rw}
+.MJXc-TeX-type-R {font-family: MJXc-TeX-type-R,MJXc-TeX-type-Rw}
+.MJXc-TeX-cal-R {font-family: MJXc-TeX-cal-R,MJXc-TeX-cal-Rw}
+.MJXc-TeX-main-B {font-family: MJXc-TeX-main-B,MJXc-TeX-main-Bx,MJXc-TeX-main-Bw}
+.MJXc-TeX-main-I {font-family: MJXc-TeX-main-I,MJXc-TeX-main-Ix,MJXc-TeX-main-Iw}
+.MJXc-TeX-main-R {font-family: MJXc-TeX-main-R,MJXc-TeX-main-Rw}
+.MJXc-TeX-math-I {font-family: MJXc-TeX-math-I,MJXc-TeX-math-Ix,MJXc-TeX-math-Iw}
+.MJXc-TeX-size1-R {font-family: MJXc-TeX-size1-R,MJXc-TeX-size1-Rw}
+.MJXc-TeX-size2-R {font-family: MJXc-TeX-size2-R,MJXc-TeX-size2-Rw}
+.MJXc-TeX-size3-R {font-family: MJXc-TeX-size3-R,MJXc-TeX-size3-Rw}
+.MJXc-TeX-size4-R {font-family: MJXc-TeX-size4-R,MJXc-TeX-size4-Rw}
+.MJXc-TeX-vec-R {font-family: MJXc-TeX-vec-R,MJXc-TeX-vec-Rw}
+.MJXc-TeX-vec-B {font-family: MJXc-TeX-vec-B,MJXc-TeX-vec-Bx,MJXc-TeX-vec-Bw}
+@font-face {font-family: MJXc-TeX-ams-R; src: local('MathJax_AMS'), local('MathJax_AMS-Regular')}
+@font-face {font-family: MJXc-TeX-ams-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_AMS-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_AMS-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_AMS-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-cal-B; src: local('MathJax_Caligraphic Bold'), local('MathJax_Caligraphic-Bold')}
+@font-face {font-family: MJXc-TeX-cal-Bx; src: local('MathJax_Caligraphic'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-cal-Bw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Caligraphic-Bold.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Bold.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-frak-R; src: local('MathJax_Fraktur'), local('MathJax_Fraktur-Regular')}
+@font-face {font-family: MJXc-TeX-frak-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Fraktur-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Fraktur-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-frak-B; src: local('MathJax_Fraktur Bold'), local('MathJax_Fraktur-Bold')}
+@font-face {font-family: MJXc-TeX-frak-Bx; src: local('MathJax_Fraktur'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-frak-Bw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Fraktur-Bold.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Fraktur-Bold.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-math-BI; src: local('MathJax_Math BoldItalic'), local('MathJax_Math-BoldItalic')}
+@font-face {font-family: MJXc-TeX-math-BIx; src: local('MathJax_Math'); font-weight: bold; font-style: italic}
+@font-face {font-family: MJXc-TeX-math-BIw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Math-BoldItalic.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Math-BoldItalic.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Math-BoldItalic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-R; src: local('MathJax_SansSerif'), local('MathJax_SansSerif-Regular')}
+@font-face {font-family: MJXc-TeX-sans-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-B; src: local('MathJax_SansSerif Bold'), local('MathJax_SansSerif-Bold')}
+@font-face {font-family: MJXc-TeX-sans-Bx; src: local('MathJax_SansSerif'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-sans-Bw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Bold.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Bold.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-I; src: local('MathJax_SansSerif Italic'), local('MathJax_SansSerif-Italic')}
+@font-face {font-family: MJXc-TeX-sans-Ix; src: local('MathJax_SansSerif'); font-style: italic}
+@font-face {font-family: MJXc-TeX-sans-Iw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Italic.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Italic.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-script-R; src: local('MathJax_Script'), local('MathJax_Script-Regular')}
+@font-face {font-family: MJXc-TeX-script-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Script-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Script-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Script-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-type-R; src: local('MathJax_Typewriter'), local('MathJax_Typewriter-Regular')}
+@font-face {font-family: MJXc-TeX-type-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Typewriter-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Typewriter-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Typewriter-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-cal-R; src: local('MathJax_Caligraphic'), local('MathJax_Caligraphic-Regular')}
+@font-face {font-family: MJXc-TeX-cal-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Caligraphic-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-B; src: local('MathJax_Main Bold'), local('MathJax_Main-Bold')}
+@font-face {font-family: MJXc-TeX-main-Bx; src: local('MathJax_Main'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-main-Bw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Main-Bold.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-I; src: local('MathJax_Main Italic'), local('MathJax_Main-Italic')}
+@font-face {font-family: MJXc-TeX-main-Ix; src: local('MathJax_Main'); font-style: italic}
+@font-face {font-family: MJXc-TeX-main-Iw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Main-Italic.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-R; src: local('MathJax_Main'), local('MathJax_Main-Regular')}
+@font-face {font-family: MJXc-TeX-main-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Main-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-math-I; src: local('MathJax_Math Italic'), local('MathJax_Math-Italic')}
+@font-face {font-family: MJXc-TeX-math-Ix; src: local('MathJax_Math'); font-style: italic}
+@font-face {font-family: MJXc-TeX-math-Iw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Math-Italic.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size1-R; src: local('MathJax_Size1'), local('MathJax_Size1-Regular')}
+@font-face {font-family: MJXc-TeX-size1-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Size1-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size2-R; src: local('MathJax_Size2'), local('MathJax_Size2-Regular')}
+@font-face {font-family: MJXc-TeX-size2-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Size2-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size3-R; src: local('MathJax_Size3'), local('MathJax_Size3-Regular')}
+@font-face {font-family: MJXc-TeX-size3-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Size3-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size4-R; src: local('MathJax_Size4'), local('MathJax_Size4-Regular')}
+@font-face {font-family: MJXc-TeX-size4-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Size4-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-vec-R; src: local('MathJax_Vector'), local('MathJax_Vector-Regular')}
+@font-face {font-family: MJXc-TeX-vec-Rw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Vector-Regular.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Vector-Regular.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Vector-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-vec-B; src: local('MathJax_Vector Bold'), local('MathJax_Vector-Bold')}
+@font-face {font-family: MJXc-TeX-vec-Bx; src: local('MathJax_Vector'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-vec-Bw; src /*1*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/eot/MathJax_Vector-Bold.eot'); src /*2*/: url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/woff/MathJax_Vector-Bold.woff') format('woff'), url('https://mathjax.rstudio.com/latest/fonts/HTML-CSS/TeX/otf/MathJax_Vector-Bold.otf') format('opentype')}
+</style></head>
+
+<body><div id="MathJax_Message" style="display: none;"></div>
+
+
+
+  <div class="book   font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary"><div class="book-search" role="search"><label for="search-box" aria-hidden="false" hidden="hidden">Type to search</label><input id="search-box" type="search" class="form-control" placeholder="Type to search (Enter for navigation)" title="Use Enter or the &lt;Down&gt; key to navigate to the next match, or the &lt;Up&gt; key to the previous match"></div>
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://mi2-education.github.io/2021L-WB-Book/"><h3>Case Studies</h3></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="https://mi2-education.github.io/2021L-WB-Book/index.html"><i class="fa fa-check"></i>Preface</a>
+<ul style="display: none;">
+<li class="chapter" data-level="" data-path="technical-setup.html"><a href="https://mi2-education.github.io/2021L-WB-Book/technical-setup.html"><i class="fa fa-check"></i>Technical Setup</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="explainable-artificial-intelligence-1.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explainable-artificial-intelligence-1.html"><i class="fa fa-check"></i><b>1</b> Explainable Artificial Intelligence 1</a>
+<ul style="display: none;">
+<li class="chapter" data-level="1.1" data-path="xai1-explainable-cards.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-cards.html"><i class="fa fa-check"></i><b>1.1</b> Explaining Credit Card Customers churns</a>
+<ul style="display: none;">
+<li class="chapter" data-level="1.1.1" data-path="xai1-explainable-cards.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-cards.html#introduction-and-motivation"><i class="fa fa-check"></i><b>1.1.1</b> Introduction and Motivation</a></li>
+<li class="chapter" data-level="1.1.2" data-path="xai1-explainable-cards.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-cards.html#methodology"><i class="fa fa-check"></i><b>1.1.2</b> Methodology</a></li>
+<li class="chapter" data-level="1.1.3" data-path="xai1-explainable-cards.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-cards.html#local-explanations"><i class="fa fa-check"></i><b>1.1.3</b> Local explanations</a></li>
+<li class="chapter" data-level="1.1.4" data-path="xai1-explainable-cards.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-cards.html#global-explanations"><i class="fa fa-check"></i><b>1.1.4</b> Global explanations</a></li>
+<li class="chapter" data-level="1.1.5" data-path="xai1-explainable-cards.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-cards.html#summary"><i class="fa fa-check"></i><b>1.1.5</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="xai-in-real-estate-pricing-a-case-study.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai-in-real-estate-pricing-a-case-study.html"><i class="fa fa-check"></i><b>1.2</b> XAI in real estate pricing: A case study</a>
+<ul style="display: none;">
+<li class="chapter" data-level="1.2.1" data-path="xai-in-real-estate-pricing-a-case-study.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai-in-real-estate-pricing-a-case-study.html#abstract"><i class="fa fa-check"></i><b>1.2.1</b> Abstract</a></li>
+<li class="chapter" data-level="1.2.2" data-path="xai-in-real-estate-pricing-a-case-study.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai-in-real-estate-pricing-a-case-study.html#introduction"><i class="fa fa-check"></i><b>1.2.2</b> Introduction</a></li>
+<li class="chapter" data-level="1.2.3" data-path="xai-in-real-estate-pricing-a-case-study.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai-in-real-estate-pricing-a-case-study.html#related-work"><i class="fa fa-check"></i><b>1.2.3</b> Related Work</a></li>
+<li class="chapter" data-level="1.2.4" data-path="xai-in-real-estate-pricing-a-case-study.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai-in-real-estate-pricing-a-case-study.html#methodology-1"><i class="fa fa-check"></i><b>1.2.4</b> Methodology</a></li>
+<li class="chapter" data-level="1.2.5" data-path="xai-in-real-estate-pricing-a-case-study.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai-in-real-estate-pricing-a-case-study.html#results"><i class="fa fa-check"></i><b>1.2.5</b> Results</a></li>
+<li class="chapter" data-level="1.2.6" data-path="xai-in-real-estate-pricing-a-case-study.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai-in-real-estate-pricing-a-case-study.html#summary-and-conclusions"><i class="fa fa-check"></i><b>1.2.6</b> Summary and conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html"><a href="https://mi2-education.github.io/2021L-WB-Book/coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html"><i class="fa fa-check"></i><b>1.3</b> Coronary artery disease: Is it worth trusting ML when it comes to our health?</a>
+<ul style="display: none;">
+<li class="chapter" data-level="1.3.1" data-path="coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html"><a href="https://mi2-education.github.io/2021L-WB-Book/coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html#abstract-1"><i class="fa fa-check"></i><b>1.3.1</b> Abstract</a></li>
+<li class="chapter" data-level="1.3.2" data-path="coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html"><a href="https://mi2-education.github.io/2021L-WB-Book/coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html#introduction-and-motivation-1"><i class="fa fa-check"></i><b>1.3.2</b> Introduction and Motivation</a></li>
+<li class="chapter" data-level="1.3.3" data-path="coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html"><a href="https://mi2-education.github.io/2021L-WB-Book/coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html#related-work-1"><i class="fa fa-check"></i><b>1.3.3</b> Related Work</a></li>
+<li class="chapter" data-level="1.3.4" data-path="coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html"><a href="https://mi2-education.github.io/2021L-WB-Book/coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html#methodology-2"><i class="fa fa-check"></i><b>1.3.4</b> Methodology</a></li>
+<li class="chapter" data-level="1.3.5" data-path="coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html"><a href="https://mi2-education.github.io/2021L-WB-Book/coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html#results-1"><i class="fa fa-check"></i><b>1.3.5</b> Results</a></li>
+<li class="chapter" data-level="1.3.6" data-path="coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html"><a href="https://mi2-education.github.io/2021L-WB-Book/coronary-artery-disease-is-it-worth-trusting-ml-when-it-comes-to-our-health.html#summary-and-conclusions-1"><i class="fa fa-check"></i><b>1.3.6</b> Summary and conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="xai1-explainable-wine.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-wine.html"><i class="fa fa-check"></i><b>1.4</b> Red wine mystery: using explainable AI to inspect factors behind wine quality</a>
+<ul style="display: none;">
+<li class="chapter" data-level="1.4.1" data-path="xai1-explainable-wine.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-wine.html#abstract-2"><i class="fa fa-check"></i><b>1.4.1</b> Abstract</a></li>
+<li class="chapter" data-level="1.4.2" data-path="xai1-explainable-wine.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-wine.html#introduction-and-motivation-2"><i class="fa fa-check"></i><b>1.4.2</b> Introduction and Motivation</a></li>
+<li class="chapter" data-level="1.4.3" data-path="xai1-explainable-wine.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-wine.html#methodology-3"><i class="fa fa-check"></i><b>1.4.3</b> Methodology</a></li>
+<li class="chapter" data-level="1.4.4" data-path="xai1-explainable-wine.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-wine.html#global-explanations-3"><i class="fa fa-check"></i><b>1.4.4</b> Global explanations</a></li>
+<li class="chapter" data-level="1.4.5" data-path="xai1-explainable-wine.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-wine.html#local-explanations-3"><i class="fa fa-check"></i><b>1.4.5</b> Local explanations</a></li>
+<li class="chapter" data-level="1.4.6" data-path="xai1-explainable-wine.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-wine.html#confrontation-with-science"><i class="fa fa-check"></i><b>1.4.6</b> Confrontation with science</a></li>
+<li class="chapter" data-level="1.4.7" data-path="xai1-explainable-wine.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-wine.html#summary-1"><i class="fa fa-check"></i><b>1.4.7</b> Summary</a></li>
+<li class="chapter" data-level="1.4.8" data-path="xai1-explainable-wine.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-wine.html#conclusions"><i class="fa fa-check"></i><b>1.4.8</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="xai1-explainable-hotels.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-hotels.html"><i class="fa fa-check"></i><b>1.5</b> Explanatory approach to modeling the risk of hotel booking cancellations</a>
+<ul style="display: none;">
+<li class="chapter" data-level="1.5.1" data-path="xai1-explainable-hotels.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-hotels.html#abstract-3"><i class="fa fa-check"></i><b>1.5.1</b> Abstract</a></li>
+<li class="chapter" data-level="1.5.2" data-path="xai1-explainable-hotels.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-hotels.html#introduction-1"><i class="fa fa-check"></i><b>1.5.2</b> Introduction</a></li>
+<li class="chapter" data-level="1.5.3" data-path="xai1-explainable-hotels.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-hotels.html#dataset_models"><i class="fa fa-check"></i><b>1.5.3</b> Dataset and models</a></li>
+<li class="chapter" data-level="1.5.4" data-path="xai1-explainable-hotels.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-hotels.html#local"><i class="fa fa-check"></i><b>1.5.4</b> Local explanations</a></li>
+<li class="chapter" data-level="1.5.5" data-path="xai1-explainable-hotels.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-hotels.html#global-explanations-4"><i class="fa fa-check"></i><b>1.5.5</b> Global explanations</a></li>
+<li class="chapter" data-level="1.5.6" data-path="xai1-explainable-hotels.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai1-explainable-hotels.html#summary-and-conclusions-2"><i class="fa fa-check"></i><b>1.5.6</b> Summary and conclusions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="explainable-artificial-intelligence-2.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explainable-artificial-intelligence-2.html"><i class="fa fa-check"></i><b>2</b> Explainable Artificial Intelligence 2</a>
+<ul style="display: block;">
+<li class="chapter" data-level="2.1" data-path="xai2-phones.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-phones.html" title="2.1 Does brand has an impact on smartphone prices?"><i class="fa fa-check"></i><b>2.1</b> Does brand has an impact on smartphone prices?</a>
+<ul style="display: none;">
+<li class="chapter" data-level="2.1.1" data-path="xai2-phones.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-phones.html#abstract-4"><i class="fa fa-check"></i><b>2.1.1</b> Abstract</a></li>
+<li class="chapter" data-level="2.1.2" data-path="xai2-phones.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-phones.html#introduction-motivation-and-related-work"><i class="fa fa-check"></i><b>2.1.2</b> Introduction, motivation and related work</a></li>
+<li class="chapter" data-level="2.1.3" data-path="xai2-phones.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-phones.html#methodology-4"><i class="fa fa-check"></i><b>2.1.3</b> Methodology</a></li>
+<li class="chapter" data-level="2.1.4" data-path="xai2-phones.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-phones.html#results-2"><i class="fa fa-check"></i><b>2.1.4</b> Results</a></li>
+<li class="chapter" data-level="2.1.5" data-path="xai2-phones.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-phones.html#summary-and-conclusion"><i class="fa fa-check"></i><b>2.1.5</b> Summary and conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="xai2-german-credit-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-german-credit-data.html" title="2.2 Classifying people as good or bad credit risks"><i class="fa fa-check"></i><b>2.2</b> Classifying people as good or bad credit risks</a>
+<ul style="display: none;">
+<li class="chapter" data-level="2.2.1" data-path="xai2-german-credit-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-german-credit-data.html#abstract-5"><i class="fa fa-check"></i><b>2.2.1</b> Abstract</a></li>
+<li class="chapter" data-level="2.2.2" data-path="xai2-german-credit-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-german-credit-data.html#introduction-2"><i class="fa fa-check"></i><b>2.2.2</b> Introduction</a></li>
+<li class="chapter" data-level="2.2.3" data-path="xai2-german-credit-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-german-credit-data.html#dataset-and-models"><i class="fa fa-check"></i><b>2.2.3</b> Dataset and models</a></li>
+<li class="chapter" data-level="2.2.4" data-path="xai2-german-credit-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-german-credit-data.html#local-explanations-4"><i class="fa fa-check"></i><b>2.2.4</b> Local explanations</a></li>
+<li class="chapter" data-level="2.2.5" data-path="xai2-german-credit-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-german-credit-data.html#global-explanations-5"><i class="fa fa-check"></i><b>2.2.5</b> Global explanations</a></li>
+<li class="chapter" data-level="2.2.6" data-path="xai2-german-credit-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/xai2-german-credit-data.html#summary-and-conclusions-3"><i class="fa fa-check"></i><b>2.2.6</b> Summary and conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="how-to-predict-the-probability-of-subsequent-blood-donations.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-predict-the-probability-of-subsequent-blood-donations.html" title="2.3 How to predict the probability of subsequent blood donations?"><i class="fa fa-check"></i><b>2.3</b> How to predict the probability of subsequent blood donations?</a>
+<ul style="display: none;">
+<li class="chapter" data-level="2.3.1" data-path="how-to-predict-the-probability-of-subsequent-blood-donations.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-predict-the-probability-of-subsequent-blood-donations.html#abstract-6"><i class="fa fa-check"></i><b>2.3.1</b> Abstract</a></li>
+<li class="chapter" data-level="2.3.2" data-path="how-to-predict-the-probability-of-subsequent-blood-donations.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-predict-the-probability-of-subsequent-blood-donations.html#introduction-and-motivation-3"><i class="fa fa-check"></i><b>2.3.2</b> Introduction and motivation</a></li>
+<li class="chapter" data-level="2.3.3" data-path="how-to-predict-the-probability-of-subsequent-blood-donations.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-predict-the-probability-of-subsequent-blood-donations.html#related-work-2"><i class="fa fa-check"></i><b>2.3.3</b> Related work</a></li>
+<li class="chapter" data-level="2.3.4" data-path="how-to-predict-the-probability-of-subsequent-blood-donations.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-predict-the-probability-of-subsequent-blood-donations.html#data-analysis-and-pre-processing"><i class="fa fa-check"></i><b>2.3.4</b> Data analysis and pre-processing</a></li>
+<li class="chapter" data-level="2.3.5" data-path="how-to-predict-the-probability-of-subsequent-blood-donations.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-predict-the-probability-of-subsequent-blood-donations.html#models-preparation-and-selection"><i class="fa fa-check"></i><b>2.3.5</b> Models preparation and selection</a></li>
+<li class="chapter" data-level="2.3.6" data-path="how-to-predict-the-probability-of-subsequent-blood-donations.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-predict-the-probability-of-subsequent-blood-donations.html#global-explanations-6"><i class="fa fa-check"></i><b>2.3.6</b> Global explanations</a></li>
+<li class="chapter" data-level="2.3.7" data-path="how-to-predict-the-probability-of-subsequent-blood-donations.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-predict-the-probability-of-subsequent-blood-donations.html#local-explanations-5"><i class="fa fa-check"></i><b>2.3.7</b> Local explanations</a></li>
+<li class="chapter" data-level="2.3.8" data-path="how-to-predict-the-probability-of-subsequent-blood-donations.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-predict-the-probability-of-subsequent-blood-donations.html#conclusions-and-summary"><i class="fa fa-check"></i><b>2.3.8</b> Conclusions and summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="explaining-diabetes-indicators.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html"><i class="fa fa-check"></i><b>2.4</b> Explaining diabetes indicators</a>
+<ul style="display: none;">
+<li class="chapter" data-level="2.4.1" data-path="explaining-diabetes-indicators.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html#abstract-7"><i class="fa fa-check"></i><b>2.4.1</b> Abstract</a></li>
+<li class="chapter" data-level="2.4.2" data-path="explaining-diabetes-indicators.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html#introduction-3"><i class="fa fa-check"></i><b>2.4.2</b> Introduction</a></li>
+<li class="chapter" data-level="2.4.3" data-path="explaining-diabetes-indicators.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html#methods"><i class="fa fa-check"></i><b>2.4.3</b> Methods</a></li>
+<li class="chapter" data-level="2.4.4" data-path="explaining-diabetes-indicators.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html#explanations"><i class="fa fa-check"></i><b>2.4.4</b> Explanations</a></li>
+<li class="chapter" data-level="2.4.5" data-path="explaining-diabetes-indicators.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html#results-3"><i class="fa fa-check"></i><b>2.4.5</b> Results</a></li>
+<li class="chapter" data-level="2.4.6" data-path="explaining-diabetes-indicators.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html#expert-opinions"><i class="fa fa-check"></i><b>2.4.6</b> Expert opinions</a></li>
+<li class="chapter" data-level="2.4.7" data-path="explaining-diabetes-indicators.html"><a href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html#conclusions-1"><i class="fa fa-check"></i><b>2.4.7</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter active" data-level="2.5" data-path="how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html" title="2.5 How the price of the house is influenced by neighborhood? XAI methods for interpretation the black box model"><i class="fa fa-check"></i><b>2.5</b> How the price of the house is influenced by neighborhood? XAI methods for interpretation the black box model</a>
+<ul style="display: none;">
+<li class="chapter" data-level="2.5.1" data-path="how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#abstract-8"><i class="fa fa-check"></i><b>2.5.1</b> Abstract</a></li>
+<li class="chapter" data-level="2.5.2" data-path="how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#introduction-4"><i class="fa fa-check"></i><b>2.5.2</b> Introduction</a></li>
+<li class="chapter" data-level="2.5.3" data-path="how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#literature"><i class="fa fa-check"></i><b>2.5.3</b> Literature</a></li>
+<li class="chapter" data-level="2.5.4" data-path="how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#local-explanations-6"><i class="fa fa-check"></i><b>2.5.4</b> Local explanations</a></li>
+<li class="chapter" data-level="2.5.5" data-path="how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#global-explanations-7"><i class="fa fa-check"></i><b>2.5.5</b> Global explanations</a></li>
+<li class="chapter" data-level="2.5.6" data-path="how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#conclusion"><i class="fa fa-check"></i><b>2.5.6</b> Conclusion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="deep-learning-1.html"><a href="https://mi2-education.github.io/2021L-WB-Book/deep-learning-1.html"><i class="fa fa-check"></i><b>3</b> Deep Learning 1</a>
+<ul style="display: none;">
+<li class="chapter" data-level="3.1" data-path="lungnet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/lungnet.html"><i class="fa fa-check"></i><b>3.1</b> LungNet</a>
+<ul style="display: none;">
+<li class="chapter" data-level="3.1.1" data-path="lungnet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/lungnet.html#introduction-5"><i class="fa fa-check"></i><b>3.1.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.1.2" data-path="lungnet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/lungnet.html#data"><i class="fa fa-check"></i><b>3.1.2</b> Data</a></li>
+<li class="chapter" data-level="3.1.3" data-path="lungnet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/lungnet.html#original-model"><i class="fa fa-check"></i><b>3.1.3</b> Original model</a></li>
+<li class="chapter" data-level="3.1.4" data-path="lungnet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/lungnet.html#new-models"><i class="fa fa-check"></i><b>3.1.4</b> New models</a></li>
+<li class="chapter" data-level="3.1.5" data-path="lungnet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/lungnet.html#summary-2"><i class="fa fa-check"></i><b>3.1.5</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="on-the-reproducibility-of-the-bcdu-net-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/on-the-reproducibility-of-the-bcdu-net-model.html"><i class="fa fa-check"></i><b>3.2</b> On the reproducibility of the BCDU-Net model</a>
+<ul style="display: none;">
+<li class="chapter" data-level="3.2.1" data-path="on-the-reproducibility-of-the-bcdu-net-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/on-the-reproducibility-of-the-bcdu-net-model.html#abstract-9"><i class="fa fa-check"></i><b>3.2.1</b> Abstract</a></li>
+<li class="chapter" data-level="3.2.2" data-path="on-the-reproducibility-of-the-bcdu-net-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/on-the-reproducibility-of-the-bcdu-net-model.html#introduction-6"><i class="fa fa-check"></i><b>3.2.2</b> Introduction</a></li>
+<li class="chapter" data-level="3.2.3" data-path="on-the-reproducibility-of-the-bcdu-net-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/on-the-reproducibility-of-the-bcdu-net-model.html#reproduction-of-the-results"><i class="fa fa-check"></i><b>3.2.3</b> Reproduction of the results</a></li>
+<li class="chapter" data-level="3.2.4" data-path="on-the-reproducibility-of-the-bcdu-net-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/on-the-reproducibility-of-the-bcdu-net-model.html#further-experiments"><i class="fa fa-check"></i><b>3.2.4</b> Further experiments</a></li>
+<li class="chapter" data-level="3.2.5" data-path="on-the-reproducibility-of-the-bcdu-net-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/on-the-reproducibility-of-the-bcdu-net-model.html#other-tools-applied-to-the-model"><i class="fa fa-check"></i><b>3.2.5</b> Other tools applied to the model</a></li>
+<li class="chapter" data-level="3.2.6" data-path="on-the-reproducibility-of-the-bcdu-net-model.html"><a href="https://mi2-education.github.io/2021L-WB-Book/on-the-reproducibility-of-the-bcdu-net-model.html#results-and-conclusions"><i class="fa fa-check"></i><b>3.2.6</b> Results and conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html"><i class="fa fa-check"></i><b>3.3</b> An Exploration of DeepCovidExplainer: Explainable COVID-19 Diagnosis from Chest X-rays</a>
+<ul style="display: none;">
+<li class="chapter" data-level="3.3.1" data-path="an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html#introduction-and-motivation-4"><i class="fa fa-check"></i><b>3.3.1</b> Introduction and motivation <!-- DONE --></a></li>
+<li class="chapter" data-level="3.3.2" data-path="an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html#related-work-3"><i class="fa fa-check"></i><b>3.3.2</b> Related work</a></li>
+<li class="chapter" data-level="3.3.3" data-path="an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html#our-work"><i class="fa fa-check"></i><b>3.3.3</b> Our work</a></li>
+<li class="chapter" data-level="3.3.4" data-path="an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/an-exploration-of-deepcovidexplainer-explainable-covid-19-diagnosis-from-chest-x-rays.html#conclusions-and-summary-1"><i class="fa fa-check"></i><b>3.3.4</b> Conclusions and summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="erscovid.html"><a href="https://mi2-education.github.io/2021L-WB-Book/erscovid.html"><i class="fa fa-check"></i><b>3.4</b> ERSCovid</a>
+<ul style="display: none;">
+<li class="chapter" data-level="3.4.1" data-path="erscovid.html"><a href="https://mi2-education.github.io/2021L-WB-Book/erscovid.html#abstract-10"><i class="fa fa-check"></i><b>3.4.1</b> Abstract</a></li>
+<li class="chapter" data-level="3.4.2" data-path="erscovid.html"><a href="https://mi2-education.github.io/2021L-WB-Book/erscovid.html#problem"><i class="fa fa-check"></i><b>3.4.2</b> Problem</a></li>
+<li class="chapter" data-level="3.4.3" data-path="erscovid.html"><a href="https://mi2-education.github.io/2021L-WB-Book/erscovid.html#erscovid-workflow"><i class="fa fa-check"></i><b>3.4.3</b> ERSCovid workflow</a></li>
+<li class="chapter" data-level="3.4.4" data-path="erscovid.html"><a href="https://mi2-education.github.io/2021L-WB-Book/erscovid.html#data-1"><i class="fa fa-check"></i><b>3.4.4</b> Data</a></li>
+<li class="chapter" data-level="3.4.5" data-path="erscovid.html"><a href="https://mi2-education.github.io/2021L-WB-Book/erscovid.html#training"><i class="fa fa-check"></i><b>3.4.5</b> Training</a></li>
+<li class="chapter" data-level="3.4.6" data-path="erscovid.html"><a href="https://mi2-education.github.io/2021L-WB-Book/erscovid.html#changes-to-original-model"><i class="fa fa-check"></i><b>3.4.6</b> Changes to original model</a></li>
+<li class="chapter" data-level="3.4.7" data-path="erscovid.html"><a href="https://mi2-education.github.io/2021L-WB-Book/erscovid.html#summary-3"><i class="fa fa-check"></i><b>3.4.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="reproducing-and-modifying-covid-net.html"><a href="https://mi2-education.github.io/2021L-WB-Book/reproducing-and-modifying-covid-net.html"><i class="fa fa-check"></i><b>3.5</b> Reproducing and modifying COVID-Net</a>
+<ul style="display: none;">
+<li class="chapter" data-level="3.5.1" data-path="reproducing-and-modifying-covid-net.html"><a href="https://mi2-education.github.io/2021L-WB-Book/reproducing-and-modifying-covid-net.html#abstract-11"><i class="fa fa-check"></i><b>3.5.1</b> Abstract</a></li>
+<li class="chapter" data-level="3.5.2" data-path="reproducing-and-modifying-covid-net.html"><a href="https://mi2-education.github.io/2021L-WB-Book/reproducing-and-modifying-covid-net.html#introduction-and-motivation-5"><i class="fa fa-check"></i><b>3.5.2</b> Introduction and motivation</a></li>
+<li class="chapter" data-level="3.5.3" data-path="reproducing-and-modifying-covid-net.html"><a href="https://mi2-education.github.io/2021L-WB-Book/reproducing-and-modifying-covid-net.html#related-work-4"><i class="fa fa-check"></i><b>3.5.3</b> Related work</a></li>
+<li class="chapter" data-level="3.5.4" data-path="reproducing-and-modifying-covid-net.html"><a href="https://mi2-education.github.io/2021L-WB-Book/reproducing-and-modifying-covid-net.html#dataset-4"><i class="fa fa-check"></i><b>3.5.4</b> Dataset</a></li>
+<li class="chapter" data-level="3.5.5" data-path="reproducing-and-modifying-covid-net.html"><a href="https://mi2-education.github.io/2021L-WB-Book/reproducing-and-modifying-covid-net.html#reproducibility"><i class="fa fa-check"></i><b>3.5.5</b> Reproducibility</a></li>
+<li class="chapter" data-level="3.5.6" data-path="reproducing-and-modifying-covid-net.html"><a href="https://mi2-education.github.io/2021L-WB-Book/reproducing-and-modifying-covid-net.html#further-experiments-and-network-modifications"><i class="fa fa-check"></i><b>3.5.6</b> Further experiments and network modifications</a></li>
+<li class="chapter" data-level="3.5.7" data-path="reproducing-and-modifying-covid-net.html"><a href="https://mi2-education.github.io/2021L-WB-Book/reproducing-and-modifying-covid-net.html#summary-4"><i class="fa fa-check"></i><b>3.5.7</b> Summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="deep-learning-2.html"><a href="https://mi2-education.github.io/2021L-WB-Book/deep-learning-2.html"><i class="fa fa-check"></i><b>4</b> Deep Learning 2</a>
+<ul style="display: none;">
+<li class="chapter" data-level="4.1" data-path="what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html"><a href="https://mi2-education.github.io/2021L-WB-Book/what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html"><i class="fa fa-check"></i><b>4.1</b> What makes an article reproducible? Comparison of the FER+ paper and AxonDeepSeg</a>
+<ul style="display: none;">
+<li class="chapter" data-level="4.1.1" data-path="what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html"><a href="https://mi2-education.github.io/2021L-WB-Book/what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html#abstract-12"><i class="fa fa-check"></i><b>4.1.1</b> Abstract</a></li>
+<li class="chapter" data-level="4.1.2" data-path="what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html"><a href="https://mi2-education.github.io/2021L-WB-Book/what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html#introduction-7"><i class="fa fa-check"></i><b>4.1.2</b> Introduction</a></li>
+<li class="chapter" data-level="4.1.3" data-path="what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html"><a href="https://mi2-education.github.io/2021L-WB-Book/what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html#analyzing-the-ferplus-paper"><i class="fa fa-check"></i><b>4.1.3</b> Analyzing the FERPlus paper</a></li>
+<li class="chapter" data-level="4.1.4" data-path="what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html"><a href="https://mi2-education.github.io/2021L-WB-Book/what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html#reproducibility-analysis"><i class="fa fa-check"></i><b>4.1.4</b> Reproducibility analysis</a></li>
+<li class="chapter" data-level="4.1.5" data-path="what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html"><a href="https://mi2-education.github.io/2021L-WB-Book/what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html#analyzing-the-axondeepseg-paper"><i class="fa fa-check"></i><b>4.1.5</b> Analyzing the AxonDeepSeg paper</a></li>
+<li class="chapter" data-level="4.1.6" data-path="what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html"><a href="https://mi2-education.github.io/2021L-WB-Book/what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html#reproducibility-analysis-1"><i class="fa fa-check"></i><b>4.1.6</b> Reproducibility analysis</a></li>
+<li class="chapter" data-level="4.1.7" data-path="what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html"><a href="https://mi2-education.github.io/2021L-WB-Book/what-makes-an-article-reproducible-comparison-of-the-fer-paper-and-axondeepseg.html#conclusion-1"><i class="fa fa-check"></i><b>4.1.7</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html"><i class="fa fa-check"></i><b>4.2</b> Can you classify histopathological data at home? Reproducing the ARA-CNN model’s data and performance.</a>
+<ul style="display: none;">
+<li class="chapter" data-level="4.2.1" data-path="can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html#abstract-13"><i class="fa fa-check"></i><b>4.2.1</b> Abstract</a></li>
+<li class="chapter" data-level="4.2.2" data-path="can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html#introduction-8"><i class="fa fa-check"></i><b>4.2.2</b> Introduction</a></li>
+<li class="chapter" data-level="4.2.3" data-path="can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html#definition"><i class="fa fa-check"></i><b>4.2.3</b> Definition</a></li>
+<li class="chapter" data-level="4.2.4" data-path="can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html#methodology-5"><i class="fa fa-check"></i><b>4.2.4</b> Methodology</a></li>
+<li class="chapter" data-level="4.2.5" data-path="can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html#results-4"><i class="fa fa-check"></i><b>4.2.5</b> Results</a></li>
+<li class="chapter" data-level="4.2.6" data-path="can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-classify-histopathological-data-at-home-reproducing-the-ara-cnn-models-data-and-performance-.html#summary-and-conclusions-4"><i class="fa fa-check"></i><b>4.2.6</b> Summary and conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html"><i class="fa fa-check"></i><b>4.3</b> Rethinking the U-Net architecture for multimodal biomedical image segmentation</a>
+<ul style="display: none;">
+<li class="chapter" data-level="4.3.1" data-path="rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html#abstrac"><i class="fa fa-check"></i><b>4.3.1</b> Abstrac</a></li>
+<li class="chapter" data-level="4.3.2" data-path="rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html#what-reproducibility-is"><i class="fa fa-check"></i><b>4.3.2</b> What Reproducibility Is?</a></li>
+<li class="chapter" data-level="4.3.3" data-path="rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html#first-article-an-improvement-of-data-classification-using-random-multimodel-deep-learning-rmdl"><i class="fa fa-check"></i><b>4.3.3</b> First article (An Improvement of Data Classification Using Random Multimodel Deep Learning (RMDL) )</a></li>
+<li class="chapter" data-level="4.3.4" data-path="rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html#second-article-multiresunet-rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation"><i class="fa fa-check"></i><b>4.3.4</b> Second article (MultiResUNet : Rethinking the U-Net architecture for multimodal biomedical image segmentation)</a></li>
+<li class="chapter" data-level="4.3.5" data-path="rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rethinking-the-u-net-architecture-for-multimodal-biomedical-image-segmentation.html#conclusion-2"><i class="fa fa-check"></i><b>4.3.5</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="dl2-rmdl-unet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/dl2-rmdl-unet.html"><i class="fa fa-check"></i><b>4.4</b> The reproducibility analysis of articles covering RMDL and UNet++ architectures churns</a>
+<ul style="display: none;">
+<li class="chapter" data-level="4.4.1" data-path="dl2-rmdl-unet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/dl2-rmdl-unet.html#abstract-14"><i class="fa fa-check"></i><b>4.4.1</b> Abstract</a></li>
+<li class="chapter" data-level="4.4.2" data-path="dl2-rmdl-unet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/dl2-rmdl-unet.html#reproduction"><i class="fa fa-check"></i><b>4.4.2</b> Reproduction</a></li>
+<li class="chapter" data-level="4.4.3" data-path="dl2-rmdl-unet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/dl2-rmdl-unet.html#random-multimodel-deep-learning-for-classification"><i class="fa fa-check"></i><b>4.4.3</b> Random Multimodel Deep Learning for Classification</a></li>
+<li class="chapter" data-level="4.4.4" data-path="dl2-rmdl-unet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/dl2-rmdl-unet.html#a-nested-u-net-architecture-for-medical-image-segmentation"><i class="fa fa-check"></i><b>4.4.4</b> A Nested U-Net Architecture for Medical Image Segmentation</a></li>
+<li class="chapter" data-level="4.4.5" data-path="dl2-rmdl-unet.html"><a href="https://mi2-education.github.io/2021L-WB-Book/dl2-rmdl-unet.html#conclusions-2"><i class="fa fa-check"></i><b>4.4.5</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="can-you-trust-science-on-reproduction-in-deep-learning-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-trust-science-on-reproduction-in-deep-learning-.html"><i class="fa fa-check"></i><b>4.5</b> Can you trust science? On Reproduction in Deep Learning.</a>
+<ul style="display: none;">
+<li class="chapter" data-level="4.5.1" data-path="can-you-trust-science-on-reproduction-in-deep-learning-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-trust-science-on-reproduction-in-deep-learning-.html#abstract-15"><i class="fa fa-check"></i><b>4.5.1</b> Abstract</a></li>
+<li class="chapter" data-level="4.5.2" data-path="can-you-trust-science-on-reproduction-in-deep-learning-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-trust-science-on-reproduction-in-deep-learning-.html#introduction-10"><i class="fa fa-check"></i><b>4.5.2</b> Introduction</a></li>
+<li class="chapter" data-level="4.5.3" data-path="can-you-trust-science-on-reproduction-in-deep-learning-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-trust-science-on-reproduction-in-deep-learning-.html#methodology-6"><i class="fa fa-check"></i><b>4.5.3</b> Methodology</a></li>
+<li class="chapter" data-level="4.5.4" data-path="can-you-trust-science-on-reproduction-in-deep-learning-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-trust-science-on-reproduction-in-deep-learning-.html#result"><i class="fa fa-check"></i><b>4.5.4</b> Result</a></li>
+<li class="chapter" data-level="4.5.5" data-path="can-you-trust-science-on-reproduction-in-deep-learning-.html"><a href="https://mi2-education.github.io/2021L-WB-Book/can-you-trust-science-on-reproduction-in-deep-learning-.html#discussion"><i class="fa fa-check"></i><b>4.5.5</b> Discussion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="machine-learning-1.html"><a href="https://mi2-education.github.io/2021L-WB-Book/machine-learning-1.html"><i class="fa fa-check"></i><b>5</b> Machine Learning</a>
+<ul style="display: none;">
+<li class="chapter" data-level="5.1" data-path="validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html"><i class="fa fa-check"></i><b>5.1</b> Validation and comparison of COVID-19 mortality prediction models on multi-source data</a>
+<ul style="display: none;">
+<li class="chapter" data-level="5.1.1" data-path="validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html#abstract-16"><i class="fa fa-check"></i><b>5.1.1</b> Abstract</a></li>
+<li class="chapter" data-level="5.1.2" data-path="validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html#introduction-11"><i class="fa fa-check"></i><b>5.1.2</b> Introduction</a></li>
+<li class="chapter" data-level="5.1.3" data-path="validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html#data-description-1"><i class="fa fa-check"></i><b>5.1.3</b> Data description</a></li>
+<li class="chapter" data-level="5.1.4" data-path="validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html#comparison-of-the-models"><i class="fa fa-check"></i><b>5.1.4</b> Comparison of the models</a></li>
+<li class="chapter" data-level="5.1.5" data-path="validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/validation-and-comparison-of-covid-19-mortality-prediction-models-on-multi-source-data.html#conclusion-3"><i class="fa fa-check"></i><b>5.1.5</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html"><i class="fa fa-check"></i><b>5.2</b> One model to fit them all: COVID-19 survival prediction using multinational data</a>
+<ul style="display: none;">
+<li class="chapter" data-level="5.2.1" data-path="one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html#abstract-17"><i class="fa fa-check"></i><b>5.2.1</b> Abstract</a></li>
+<li class="chapter" data-level="5.2.2" data-path="one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html#introduction-12"><i class="fa fa-check"></i><b>5.2.2</b> Introduction</a></li>
+<li class="chapter" data-level="5.2.3" data-path="one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html#data-sources"><i class="fa fa-check"></i><b>5.2.3</b> Data sources</a></li>
+<li class="chapter" data-level="5.2.4" data-path="one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html#model-building"><i class="fa fa-check"></i><b>5.2.4</b> Model building</a></li>
+<li class="chapter" data-level="5.2.5" data-path="one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html#discussion-1"><i class="fa fa-check"></i><b>5.2.5</b> Discussion</a></li>
+<li class="chapter" data-level="5.2.6" data-path="one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html"><a href="https://mi2-education.github.io/2021L-WB-Book/one-model-to-fit-them-all-covid-19-survival-prediction-using-multinational-data.html#summary-6"><i class="fa fa-check"></i><b>5.2.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html"><a href="https://mi2-education.github.io/2021L-WB-Book/transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html"><i class="fa fa-check"></i><b>5.3</b> Transparent machine learning to support predicting COVID-19 infection risk based on chronic diseases</a>
+<ul style="display: none;">
+<li class="chapter" data-level="5.3.1" data-path="transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html"><a href="https://mi2-education.github.io/2021L-WB-Book/transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html#abstract-18"><i class="fa fa-check"></i><b>5.3.1</b> Abstract</a></li>
+<li class="chapter" data-level="5.3.2" data-path="transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html"><a href="https://mi2-education.github.io/2021L-WB-Book/transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html#introduction-13"><i class="fa fa-check"></i><b>5.3.2</b> Introduction</a></li>
+<li class="chapter" data-level="5.3.3" data-path="transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html"><a href="https://mi2-education.github.io/2021L-WB-Book/transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html#flaws"><i class="fa fa-check"></i><b>5.3.3</b> Flaws</a></li>
+<li class="chapter" data-level="5.3.4" data-path="transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html"><a href="https://mi2-education.github.io/2021L-WB-Book/transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html#improvements"><i class="fa fa-check"></i><b>5.3.4</b> Improvements</a></li>
+<li class="chapter" data-level="5.3.5" data-path="transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html"><a href="https://mi2-education.github.io/2021L-WB-Book/transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html#transparent-machine-learning"><i class="fa fa-check"></i><b>5.3.5</b> Transparent Machine Learning</a></li>
+<li class="chapter" data-level="5.3.6" data-path="transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html"><a href="https://mi2-education.github.io/2021L-WB-Book/transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html#application"><i class="fa fa-check"></i><b>5.3.6</b> Application</a></li>
+<li class="chapter" data-level="5.3.7" data-path="transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html"><a href="https://mi2-education.github.io/2021L-WB-Book/transparent-machine-learning-to-support-predicting-covid-19-infection-risk-based-on-chronic-diseases.html#conclusions-3"><i class="fa fa-check"></i><b>5.3.7</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html"><a href="https://mi2-education.github.io/2021L-WB-Book/comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html"><i class="fa fa-check"></i><b>5.4</b> Comparison of neural networks and tree-based models in the clinical prediction of the course of COVID-19 illness</a>
+<ul style="display: none;">
+<li class="chapter" data-level="5.4.1" data-path="comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html"><a href="https://mi2-education.github.io/2021L-WB-Book/comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html#abstract-19"><i class="fa fa-check"></i><b>5.4.1</b> Abstract</a></li>
+<li class="chapter" data-level="5.4.2" data-path="comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html"><a href="https://mi2-education.github.io/2021L-WB-Book/comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html#introduction-14"><i class="fa fa-check"></i><b>5.4.2</b> Introduction</a></li>
+<li class="chapter" data-level="5.4.3" data-path="comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html"><a href="https://mi2-education.github.io/2021L-WB-Book/comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html#methods-2"><i class="fa fa-check"></i><b>5.4.3</b> Methods</a></li>
+<li class="chapter" data-level="5.4.4" data-path="comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html"><a href="https://mi2-education.github.io/2021L-WB-Book/comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html#results-8"><i class="fa fa-check"></i><b>5.4.4</b> Results</a></li>
+<li class="chapter" data-level="5.4.5" data-path="comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html"><a href="https://mi2-education.github.io/2021L-WB-Book/comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html#discussion-2"><i class="fa fa-check"></i><b>5.4.5</b> Discussion</a></li>
+<li class="chapter" data-level="5.4.6" data-path="comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html"><a href="https://mi2-education.github.io/2021L-WB-Book/comparison-of-neural-networks-and-tree-based-models-in-the-clinical-prediction-of-the-course-of-covid-19-illness.html#source-code"><i class="fa fa-check"></i><b>5.4.6</b> Source code</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rashomonml.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomonml.html"><i class="fa fa-check"></i><b>6</b> RashomonML</a>
+<ul style="display: none;">
+<li class="chapter" data-level="6.1" data-path="how-to-compare-many-good-machine-learning-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-compare-many-good-machine-learning-models.html"><i class="fa fa-check"></i><b>6.1</b> How to compare many good machine learning models?</a>
+<ul style="display: none;">
+<li class="chapter" data-level="6.1.1" data-path="how-to-compare-many-good-machine-learning-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-compare-many-good-machine-learning-models.html#abstract-20"><i class="fa fa-check"></i><b>6.1.1</b> Abstract</a></li>
+<li class="chapter" data-level="6.1.2" data-path="how-to-compare-many-good-machine-learning-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-compare-many-good-machine-learning-models.html#introduction-15"><i class="fa fa-check"></i><b>6.1.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.1.3" data-path="how-to-compare-many-good-machine-learning-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-compare-many-good-machine-learning-models.html#literature-review"><i class="fa fa-check"></i><b>6.1.3</b> Literature review</a></li>
+<li class="chapter" data-level="6.1.4" data-path="how-to-compare-many-good-machine-learning-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-compare-many-good-machine-learning-models.html#methodology-7"><i class="fa fa-check"></i><b>6.1.4</b> Methodology</a></li>
+<li class="chapter" data-level="6.1.5" data-path="how-to-compare-many-good-machine-learning-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-compare-many-good-machine-learning-models.html#results-9"><i class="fa fa-check"></i><b>6.1.5</b> Results</a></li>
+<li class="chapter" data-level="6.1.6" data-path="how-to-compare-many-good-machine-learning-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/how-to-compare-many-good-machine-learning-models.html#summary-and-conclusions-5"><i class="fa fa-check"></i><b>6.1.6</b> Summary and conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="analysis-of-models-predicting-death-probability-during-icu-stays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/analysis-of-models-predicting-death-probability-during-icu-stays.html"><i class="fa fa-check"></i><b>6.2</b> Analysis of models predicting death probability during ICU stays</a>
+<ul style="display: none;">
+<li class="chapter" data-level="6.2.1" data-path="analysis-of-models-predicting-death-probability-during-icu-stays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/analysis-of-models-predicting-death-probability-during-icu-stays.html#abstract-21"><i class="fa fa-check"></i><b>6.2.1</b> Abstract</a></li>
+<li class="chapter" data-level="6.2.2" data-path="analysis-of-models-predicting-death-probability-during-icu-stays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/analysis-of-models-predicting-death-probability-during-icu-stays.html#introduction-16"><i class="fa fa-check"></i><b>6.2.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.2.3" data-path="analysis-of-models-predicting-death-probability-during-icu-stays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/analysis-of-models-predicting-death-probability-during-icu-stays.html#literature-review-1"><i class="fa fa-check"></i><b>6.2.3</b> Literature review</a></li>
+<li class="chapter" data-level="6.2.4" data-path="analysis-of-models-predicting-death-probability-during-icu-stays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/analysis-of-models-predicting-death-probability-during-icu-stays.html#methodology-8"><i class="fa fa-check"></i><b>6.2.4</b> Methodology</a></li>
+<li class="chapter" data-level="6.2.5" data-path="analysis-of-models-predicting-death-probability-during-icu-stays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/analysis-of-models-predicting-death-probability-during-icu-stays.html#results-10"><i class="fa fa-check"></i><b>6.2.5</b> Results</a></li>
+<li class="chapter" data-level="6.2.6" data-path="analysis-of-models-predicting-death-probability-during-icu-stays.html"><a href="https://mi2-education.github.io/2021L-WB-Book/analysis-of-models-predicting-death-probability-during-icu-stays.html#summary-7"><i class="fa fa-check"></i><b>6.2.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="rashomon-ml-with-addition-of-dimensional-reduction.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-ml-with-addition-of-dimensional-reduction.html"><i class="fa fa-check"></i><b>6.3</b> Rashomon ML with addition of dimensional reduction</a>
+<ul style="display: none;">
+<li class="chapter" data-level="6.3.1" data-path="rashomon-ml-with-addition-of-dimensional-reduction.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-ml-with-addition-of-dimensional-reduction.html#abstract-22"><i class="fa fa-check"></i><b>6.3.1</b> Abstract</a></li>
+<li class="chapter" data-level="6.3.2" data-path="rashomon-ml-with-addition-of-dimensional-reduction.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-ml-with-addition-of-dimensional-reduction.html#introduction-and-related-works"><i class="fa fa-check"></i><b>6.3.2</b> Introduction and related works</a></li>
+<li class="chapter" data-level="6.3.3" data-path="rashomon-ml-with-addition-of-dimensional-reduction.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-ml-with-addition-of-dimensional-reduction.html#methodology-9"><i class="fa fa-check"></i><b>6.3.3</b> Methodology</a></li>
+<li class="chapter" data-level="6.3.4" data-path="rashomon-ml-with-addition-of-dimensional-reduction.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-ml-with-addition-of-dimensional-reduction.html#results-11"><i class="fa fa-check"></i><b>6.3.4</b> Results</a></li>
+<li class="chapter" data-level="6.3.5" data-path="rashomon-ml-with-addition-of-dimensional-reduction.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-ml-with-addition-of-dimensional-reduction.html#summary-and-conclusions-6"><i class="fa fa-check"></i><b>6.3.5</b> Summary and conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html"><i class="fa fa-check"></i><b>6.4</b> Rashomon sets on death prediction XGB models using MIMIC-III database</a>
+<ul style="display: none;">
+<li class="chapter" data-level="6.4.1" data-path="rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html#abstract-23"><i class="fa fa-check"></i><b>6.4.1</b> Abstract</a></li>
+<li class="chapter" data-level="6.4.2" data-path="rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html#related-works-and-introduction"><i class="fa fa-check"></i><b>6.4.2</b> Related works and introduction</a></li>
+<li class="chapter" data-level="6.4.3" data-path="rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html#methodology-10"><i class="fa fa-check"></i><b>6.4.3</b> Methodology</a></li>
+<li class="chapter" data-level="6.4.4" data-path="rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html#results-12"><i class="fa fa-check"></i><b>6.4.4</b> Results</a></li>
+<li class="chapter" data-level="6.4.5" data-path="rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-on-death-prediction-xgb-models-using-mimic-iii-database.html#conclusions-4"><i class="fa fa-check"></i><b>6.4.5</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html"><i class="fa fa-check"></i><b>6.5</b> Rashomon sets of in-hospital mortality prediction random forest models</a>
+<ul style="display: none;">
+<li class="chapter" data-level="6.5.1" data-path="rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html#abstract-24"><i class="fa fa-check"></i><b>6.5.1</b> Abstract</a></li>
+<li class="chapter" data-level="6.5.2" data-path="rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html#introduction-17"><i class="fa fa-check"></i><b>6.5.2</b> Introduction</a></li>
+<li class="chapter" data-level="6.5.3" data-path="rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html#related-work-5"><i class="fa fa-check"></i><b>6.5.3</b> Related work</a></li>
+<li class="chapter" data-level="6.5.4" data-path="rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html#mimic-iii-dataset"><i class="fa fa-check"></i><b>6.5.4</b> MIMIC-III Dataset</a></li>
+<li class="chapter" data-level="6.5.5" data-path="rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html#rashomon-sets"><i class="fa fa-check"></i><b>6.5.5</b> Rashomon Sets</a></li>
+<li class="chapter" data-level="6.5.6" data-path="rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html#results-13"><i class="fa fa-check"></i><b>6.5.6</b> Results</a></li>
+<li class="chapter" data-level="6.5.7" data-path="rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html"><a href="https://mi2-education.github.io/2021L-WB-Book/rashomon-sets-of-in-hospital-mortality-prediction-random-forest-models.html#conclusion-4"><i class="fa fa-check"></i><b>6.5.7</b> Conclusion</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org/" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body fixed">
+      <div class="body-inner">
+        <div class="book-header fixed" role="navigation" style="background-color: rgb(255, 255, 255);">
+          <a class="btn pull-left js-toolbar-action" aria-label="Toggle Sidebar" title="Toggle Sidebar" href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#"><i class="fa fa-align-justify"></i></a><a class="btn pull-left js-toolbar-action" aria-label="Search" title="Search" href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#"><i class="fa fa-search"></i></a><div class="dropdown pull-right  js-toolbar-action"><a class="btn toggle-dropdown" aria-label="Share" title="Share" href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#"><i class="fa fa-share-alt"></i></a><div class="dropdown-menu dropdown-left"><div class="dropdown-caret"><span class="caret-outer"></span><span class="caret-inner"></span></div><div class="buttons"><button class="button size-5 ">Facebook</button><button class="button size-5 ">Twitter</button><button class="button size-5 ">LinkedIn</button><button class="button size-5 ">Weibo</button><button class="button size-5 ">Instapaper</button></div></div></div><a class="btn pull-right js-toolbar-action" aria-label="Github" title="Github" href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#"><i class="fa fa-github"></i></a><a class="btn pull-right js-toolbar-action" aria-label="Twitter" title="Twitter" href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#"><i class="fa fa-twitter"></i></a><div class="dropdown pull-left font-settings js-toolbar-action"><a class="btn toggle-dropdown" aria-label="Font Settings" title="Font Settings" href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#"><i class="fa fa-font"></i></a><div class="dropdown-menu dropdown-right"><div class="dropdown-caret"><span class="caret-outer"></span><span class="caret-inner"></span></div><div class="buttons"><button class="button size-2 font-reduce">A</button><button class="button size-2 font-enlarge">A</button></div><div class="buttons"><button class="button size-2 ">Serif</button><button class="button size-2 ">Sans</button></div><div class="buttons"><button class="button size-3 ">White</button><button class="button size-3 ">Sepia</button><button class="button size-3 ">Night</button></div></div></div><a class="btn pull-left js-toolbar-action" aria-label="Edit" title="Edit" href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#"><i class="fa fa-edit"></i></a><div class="dropdown pull-left  js-toolbar-action"><a class="btn toggle-dropdown" aria-label="Download" title="Download" href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#"><i class="fa fa-download"></i></a><div class="dropdown-menu dropdown-right"><div class="dropdown-caret"><span class="caret-outer"></span><span class="caret-inner"></span></div><div class="buttons"><button class="button size-1 ">PDF</button></div><div class="buttons"><button class="button size-1 ">EPUB</button></div></div></div><a class="btn pull-left js-toolbar-action" aria-label="Information about the toolbar" title="Information about the toolbar" href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#"><i class="fa fa-info"></i></a><h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="https://mi2-education.github.io/2021L-WB-Book/">Case Studies</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model" class="section level2" number="2.5">
+<h2 class="hasAnchor"><span class="header-section-number">2.5</span> How the price of the house is influenced by neighborhood? XAI methods for interpretation the black box model<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model" class="anchor-section"></a></h2>
+<p><em>Authors: Klaudia Gruszkowska, Bartosz Jamroży, Bartosz Rożek (Warsaw University of Technology)</em></p>
+<div id="abstract-8" class="section level3" number="2.5.1">
+<h3 class="hasAnchor"><span class="header-section-number">2.5.1</span> Abstract<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#abstract-8" class="anchor-section"></a></h3>
+<p><em>The value of a house is extremely important to all of us, no matter if we are buyers, sellers or homeowners. That is why correct price prediction is so important. With the help of machine learning we are able to predict this price but not every time we know what influenced such prediction result. For this reason, the interpretability of models, used in important areas of life, has recently become increasingly valuable. In this article we interpret and explain these unknowns using Explainable Artificial Intelligence (XAI) methods.</em></p>
+</div>
+<div id="introduction-4" class="section level3" number="2.5.2">
+<h3 class="hasAnchor"><span class="header-section-number">2.5.2</span> Introduction<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#introduction-4" class="anchor-section"></a></h3>
+<p>Being able to predict the potential price of a house is crucial for the real estate market. Therefore, over the years, many papers have been focused on improving prediction methods <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-housingprediction-ml2" role="doc-biblioref">Ge et al. 2021</a>; <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-housingprediction-ml1" role="doc-biblioref">Park and Bae 2015</a>)</span>. The main question regarding forecasts is what data influences the price. In addition to physical factors of the house, such as size, number of rooms, the condition of the building, the price is also influenced by the area in which the house is located. The neighborhood affects the price of the house and the house affects the value of the surrounding buildings. Thus, house price prediction models based on neighborhood data were created <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-neighborhood3" role="doc-biblioref">Can 1990</a>; <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-neighborhood2" role="doc-biblioref">Heyman and Sommervoll 2019</a>; <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-neighborhood1" role="doc-biblioref">Law 2017</a>)</span>.</p>
+<p>With the development of artificial intelligence and machine learning, the use of this type of algorithm is gaining popularity in the field of forecasting house prices <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-housingprediction-ml1" role="doc-biblioref">Park and Bae 2015</a>)</span>. In machine learning, we can distinguish two types of models: glass-box and black-box models. In the glass-box model human can follow the steps from inputs to outputs. Black-box models is also an important part of machine learning, however unlike glass-box models, they do not have a clear, human-readable way of determining predictions <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-EMA" role="doc-biblioref">Przemyslaw Biecek and Burzykowski 2021a</a>)</span>. So why do we use them when we have glass-box models at our disposal? The complexity of black-box models is both an advantage and disadvantage at the same time. Due to it, we get better, more tailored predictions, but we also doom ourselves to the lack of precise information on how the given result was obtained.</p>
+<p>Using algorithms, we would like to know what influenced the prediction result and how. We are not inclined to trust such a difficult and complicated activity to algorithms whose decisions are unclear to human. Therefore, in this paper we use Explainable Artificial Intelligence (XAI) methods <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-XAI" role="doc-biblioref">Barredo Arrieta et al. 2020b</a>; <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-xailandscape" role="doc-biblioref">Maksymiuk et al. 2020b</a>)</span> to analyze the output of the black-box model. XAI is a field of AI that aims to create more transparent and human understandable models while not losing the quality of explanations, and to create explanations for black-box models that enable people to understand and trust the prediction results.</p>
+<p><strong>Data</strong></p>
+<p>The data that was used was the <em>California Housing Data Set</em>.
+This data was initially featured in the following paper:<span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-pace1997sparse" role="doc-biblioref">Pace and Barry 1997</a>)</span>.The data pertains to the houses found in a given California district and some summary stats about them based on the 1990 census data. Data is cleaned, contains no empty information. Table <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-ColumnDescription">2.63</a> shows the explanation of each variable.</p>
+<div class="figure" style="text-align: center"><span id="fig:2-5-ColumnDescription"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-ColumnDescription.png" alt="Meaning of the variables in the California Housing Data Set" width="1000">
+<p class="caption">
+Figure 2.63: Meaning of the variables in the California Housing Data Set
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:2-5-HeatmapOfMedianHouseValue"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-HeatmapOfMedianHouseValue.png" alt="Map of property distribution within the state of California. The brightness of the points reflects the price." width="500">
+<p class="caption">
+Figure 2.64: Map of property distribution within the state of California. The brightness of the points reflects the price.
+</p>
+</div>
+<p>The map <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-HeatmapOfMedianHouseValue">2.64</a> shows a density of bright blue dots in two locations, these are expensive properties located within two urban centers, Los Angeles, San Francisco, and San Diego.
+Also, more expensive properties are located along the Pacific coast.</p>
+<div class="figure" style="text-align: center"><span id="fig:2-5-OceanProximityOnMap"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-OceanProximityOnMap.png" alt="Map of property distribution within the state of California. Colors show the value of the oceanProximity column." width="500">
+<p class="caption">
+Figure 2.65: Map of property distribution within the state of California. Colors show the value of the oceanProximity column.
+</p>
+</div>
+<p>Property map <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-OceanProximityOnMap">2.65</a>, packing the <code>ocean_proximity</code> feature. Properties with the ‘NEAR BAY’ category colored blue, appear in only one grouping next to San Francisco, <code>NEAR BAY</code> means San Francisco Bay. Green category, <code>ISLAND</code> collects 10 properties located on one island near Los Angeles.</p>
+<p><strong>Machine learning model</strong></p>
+<p>The machine learning model explained is from <a href="https://www.kaggle.com/camnugent/introduction-to-machine-learning-in-r-tutorial" class="uri">https://www.kaggle.com/camnugent/introduction-to-machine-learning-in-r-tutorial</a>.
+A random forest model<span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-breiman1999random" role="doc-biblioref">Breiman 1999</a>)</span> from the randomForest <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-randomForest-lib" role="doc-biblioref">Liaw and Wiener 2002b</a>)</span> library with parameters <em>(ntree = 500, importance = TRUE)</em> was used to predict property values. This model does not require scaling of data or decoding of categorical data. This makes it easier to analyze the results.</p>
+<p>The two columns <code>total_bedrooms</code> and <code>total_rooms</code> were averaged by dividing by the number of household members. The new columns are <code>mean_bedrooms</code> and <code>mead_rooms</code>.</p>
+</div>
+<div id="literature" class="section level3" number="2.5.3">
+<h3 class="hasAnchor"><span class="header-section-number">2.5.3</span> Literature<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#literature" class="anchor-section"></a></h3>
+<p>Over the years, many solutions have been developed for the task of house price prediction, and what particularly interests us, solutions using machine learning <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-houseprediction-2" role="doc-biblioref">Conway 2018</a>; <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-houseprediction-1" role="doc-biblioref">Fan et al. 2018</a>; <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-housingprediction-ml1" role="doc-biblioref">Park and Bae 2015</a>)</span>. However, in our paper we will not focus on the process of creating good models but on the process of explaining models and their results using XAI methods.</p>
+<p>Why are these explanations so important? As we mentioned in the introduction, black box models do not give us insight into the reason for their decisions. As mentioned in the article <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-XAI" role="doc-biblioref">Barredo Arrieta et al. 2020b</a>)</span> that is one of the main barriers AI is facing nowadays.</p>
+<p>However, not everyone supports the development of XAI <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-againstxai3" role="doc-biblioref">Aivodji et al. 2019</a>; <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-againstxai2" role="doc-biblioref">Rudin 2019b</a> ; <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-againstxai1" role="doc-biblioref">Slack et al. 2020</a>)</span>. They point to the insufficient credibility of the explanations and the possibility that the model conceal his unethical behavior.</p>
+<p>The second issue addressed in our paper is the relationship of house price to location. Several works have been created on this topic as well. For example, Stephen Law in his work <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-neighborhood1" role="doc-biblioref">Law 2017</a>)</span> proposed defining a street as a local area unit and measuring its effect on house price. The results of his research of Metropolitan London showed significant local area effects on house prices. In our case the local area unit is block, which is a rectangular area marked by intersecting streets.
+Another example is the article written by Robin A. Dubin <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-neighborhood4" role="doc-biblioref">Dubin 1998</a>)</span>. He points out the importance of the correlations existing between the prices of neighboring houses, which is ignored in others method of predicting house values.</p>
+</div>
+<div id="local-explanations-6" class="section level3" number="2.5.4">
+<h3 class="hasAnchor"><span class="header-section-number">2.5.4</span> Local explanations<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#local-explanations-6" class="anchor-section"></a></h3>
+<p>Local explanations <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-explanations" role="doc-biblioref">Plumb et al. 2019</a>)</span> tells us, how model behaves in the area near given observation. Hence, it can not be used to explain how model works for whole set. It is useful to find out what can be done to change model’s prediction for observations we already have in our data set.
+We used observation 1 and 2000, because they are far from each other in the set so that they have different value.The location of the selected property is shown on the map <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-local-map">2.66</a>, the precise data for these properties is shown in the table <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-Housing-1-and-2000">2.67</a></p>
+<div class="figure" style="text-align: center"><span id="fig:2-5-local-map"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-map.png" alt="Choosen observations presented on a map. Red point - observation 1, green point - observation 2000" width="1000">
+<p class="caption">
+Figure 2.66: Choosen observations presented on a map. Red point - observation 1, green point - observation 2000
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:2-5-Housing-1-and-2000"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-Housing-1-and-2000.png" alt="Precise data of two selected observations analyzed by local explanations, observations with numbers 1 and 2000" width="1000">
+<p class="caption">
+Figure 2.67: Precise data of two selected observations analyzed by local explanations, observations with numbers 1 and 2000
+</p>
+</div>
+<p><strong>Break Down</strong></p>
+<p>Break down provides a way to show the local importance of variables and the effect of individual values on predictions<span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-iBreakDown" role="doc-biblioref">Gosiewska and Biecek 2019b</a>)</span>.
+The basic idea is to calculate the contribution of variable in prediction of <span class="math inline"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span id="MathJax-Element-1-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="font-size: 117%; position: relative;"><span id="MJXc-Node-1" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-2" class="mjx-mrow"><span id="MJXc-Node-3" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.483em; padding-bottom: 0.483em; padding-right: 0.06em;">f</span></span><span id="MJXc-Node-4" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.483em; padding-bottom: 0.59em;">(</span></span><span id="MJXc-Node-5" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.216em; padding-bottom: 0.27em;">x</span></span><span id="MJXc-Node-6" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.483em; padding-bottom: 0.59em;">)</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-1">f(x)</script></span> as changes in the expected model response given other variables. This means that we start with the mean expected model response of the model, successively adding variables to the conditioning. Of course, the order in which the variables are arranged also influences the contribution values.</p>
+<div class="figure" style="text-align: center"><span id="fig:2-5-BreakDownProfile"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-BreakDownProfile.png" alt="Break Down decomposition for (L) observation 1, (R) observation 2000. Bars show the contributions of the variables. Green indicates positive impact on the house value, while red indicates negative impact. First bar starts at the value of the mean expected model response.The last, blue bar indicates the difference between this mean response and the model prediction for the choosen observation. " width="100%">
+<p class="caption">
+Figure 2.68: Break Down decomposition for (L) observation 1, (R) observation 2000. Bars show the contributions of the variables. Green indicates positive impact on the house value, while red indicates negative impact. First bar starts at the value of the mean expected model response.The last, blue bar indicates the difference between this mean response and the model prediction for the choosen observation.
+</p>
+</div>
+<p>Figure <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-BreakDownProfile">2.68</a> shows the result of using Break Down method from DALEX <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-3-dalex" role="doc-biblioref">Przemyslaw Biecek 2018a</a>)</span> package.
+The variables are ranked in terms of the importance of their impact on the predictions. The most important characteristic for both properties is <code>median income</code>. Median income is indicative of neighborhood status. Residents who earn more are likely to purchase more expensive properties. For both observations the influences are strong but opposite, high earnings for the first observation at $83,000 per year have a positive influence. In contrast, for property number 2000, earnings around $15 thousand per year are the reason why the model lowers the predicted price.
+<code>Longitude</code> is the second significant feature. Average number of rooms and location relative to the ocean was also significant. Interestingly, in observation number 2000, the inland location raises the price. From the map <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-HeatmapOfMedianHouseValue">2.64</a>, it appears that it is the homes farthest from the ocean that are the cheapest.</p>
+<p><strong>Lime</strong></p>
+<p>Local Interpretable Model-agnostic Explanations (LIME) was firstly proposed by Ribeiro, Singh, and Guestrin <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-lime" role="doc-biblioref">Ribeiro et al. 2016b</a>)</span>.</p>
+<p>In LIME decomposition, our goal is to create an approximate glass-box model for an area around given observation. That model would be fully human-readable and can be easier analyzed. To do so, we create an artificial data set and teach the chosen glass-box model on it. The coefficients on the variables for the created model are the coefficients on the validity of the variables for our observation.</p>
+<div class="figure" style="text-align: center"><span id="fig:2-5-lime"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-lime.png" alt="Lime decomposition for (L) observation 1, (R) observation 2000. The size of the bar indicates the magnitude of the the estimated coefficient. Features with blue bar have positive sign of the estimated coefficient and feature with red bar have negative sign of the estimated coefficient. " width="1000">
+<p class="caption">
+Figure 2.69: Lime decomposition for (L) observation 1, (R) observation 2000. The size of the bar indicates the magnitude of the the estimated coefficient. Features with blue bar have positive sign of the estimated coefficient and feature with red bar have negative sign of the estimated coefficient.
+</p>
+</div>
+<p>Figure above <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-lime">2.69</a> shows the result of using LIME method <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-lime" role="doc-biblioref">Ribeiro et al. 2016b</a>)</span> from DALEX <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-dalex" role="doc-biblioref">Baniecki et al. 2020a</a>)</span> package. Common for both observations is that the <code>median_income</code> variable has the largest effect on prediction. However, the impact in the case 1 is large positive but in the case 2000 it is large negative. It is caused by the value of the variable. It is worth noting that the variables longitude and latitude have opposite signs in both cases. This is because these variables are negatively correlated. The second most valuable variable is the map location variable.</p>
+<p>It follows that for the observations, the key variables are <code>median_income</code> and some kind of location. This is consistent with our expectation and intuition that the higher the earnings of residents, the richer and more valued the neighborhood. Consequently, the houses themselves are also priced higher. Additionally, plots show us that impact of <code>population</code>or <code>households</code> is not significant.</p>
+<p>What is interesting, in the case 2000 above <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-BreakDownProfile">2.68</a> BreakDown as opposed to LIME found the location <code>ocean_proximity = INLAND</code> to be positive.</p>
+<p><strong>Ceteris Paribus</strong></p>
+<p><em>Ceteris Paribus</em> is a phrase that comes from Latin. Word for word meaning is “other things equal,” but in XAI much more meaningful translation would be “other things held constant.” In fact, these few words describe this method deeply - we choose one variable from observation, change it’s value, while other variables held constant and calculate new model’s prediction. Output of this operation is a function that shows us how prediction changes.</p>
+<center>
+<div class="figure"><span id="fig:2-5-single-ceteris"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-single-ceteris.png" alt="Ceteris Paribus profiles for the first observation. Blue dot is the actual value of the variable for this observation. The line indicates the change in prediction when the value of the variable changes." width="100%">
+<p class="caption">
+Figure 2.70: Ceteris Paribus profiles for the first observation. Blue dot is the actual value of the variable for this observation. The line indicates the change in prediction when the value of the variable changes.
+</p>
+</div>
+</center>
+<p>Plot <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-single-ceteris">2.70</a> above shows <em>Ceteris Paribus</em> calculated for first observation of data set. As we can see, in most cases it is straight line with change for small values. <code>Households</code> and <code>population</code> profiles are similar, which seems to be reasonable, because not many people look for apartment in a remote area. <code>Latitude</code> and <code>longitude</code> profiles are vertical lines with one decrease. Hence, a region on map can separated where <code>median value</code> would be the highest.<code>Mean rooms</code> is hard to explain in the opposition to <code>mean bedrooms</code> where we can see that the more bedrooms the higher the value is. It stops at certain value, above which valuation doesn’t change. <code>Median income</code> is almost linear function, which is understandable as rich people can afford expensive apartments.</p>
+<center>
+<div class="figure"><span id="fig:2-5-double-ceteris"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-double-ceteris.png" alt="Ceteris Paribus profiles for the first and 2000th observation. Blue line indicates changes for first observation and green indicates changes for 2000th observation. Dots are actual values of the variables for observations. " width="100%">
+<p class="caption">
+Figure 2.71: Ceteris Paribus profiles for the first and 2000th observation. Blue line indicates changes for first observation and green indicates changes for 2000th observation. Dots are actual values of the variables for observations.
+</p>
+</div>
+</center>
+<p>Next plot <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-double-ceteris">2.71</a> shows <em>Ceteris Paribus</em> calculated for two different observations. Specially two observations with massive difference in <code>median value</code> where chosen to observe what would change. Clear differences can be observed. Especially <code>latitude</code>, <code>mean bedrooms</code>, <code>mean rooms</code> and <code>population</code> shows major changes. Rest of variables have similar profiles, but these four are great example why shouldn’t we draw conclusions about whole data set based on one <em>ceteris paribus</em> calculation.</p>
+<p><strong>Local explanations conclusions</strong></p>
+<p>As it could be observed, local explanations tells a lot about given observation. Unfortunately, juxtaposition of two different observations showed us, that they can have totally different explanations. Hence, local XAI, in this case, would allow us to increase already built house’s value rather than give an instruction how to build expensive property. To get this instruction global explanations should be used.</p>
+</div>
+<div id="global-explanations-7" class="section level3" number="2.5.5">
+<h3 class="hasAnchor"><span class="header-section-number">2.5.5</span> Global explanations<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#global-explanations-7" class="anchor-section"></a></h3>
+<p>In global explanations <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-explanations" role="doc-biblioref">Plumb et al. 2019</a>)</span>, we want to find out what influenced the model as a whole in the data, rather than looking at individual observations. This gives us an overall view of the predictions for the population. We can use this information to construct new observation with desirable value of target variable.</p>
+<p><strong>Feature Importance</strong></p>
+<p>Idea of permutation-based variable-importance<span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-2-5-fisher2019all" role="doc-biblioref">A. Fisher et al. 2019c</a>)</span>:
+If a variable is important in a model, then after its permutation the model prediction should be less precise. The permutation importance of a variable <span class="math inline"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span id="MathJax-Element-2-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 117%; position: relative;"><span id="MJXc-Node-7" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-8" class="mjx-mrow"><span id="MJXc-Node-9" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.483em; padding-bottom: 0.27em;">k</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math></span></span><script type="math/tex" id="MathJax-Element-2">k</script></span> is the difference between model prediction for original data and prediction for data with permutation variable <span class="math inline"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span id="MathJax-Element-3-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 117%; position: relative;"><span id="MJXc-Node-10" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-11" class="mjx-mrow"><span id="MJXc-Node-12" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.483em; padding-bottom: 0.27em;">k</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math></span></span><script type="math/tex" id="MathJax-Element-3">k</script></span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:2-5-FeatureImportance"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-FeatureImportance.png" alt="Feature Importance plot shows the root mean square error after 10 parmutation of every variable. Bars indicate the mean value of RMSE and at the ends of the bars are boxplots created from all permutation results. " width="100%">
+<p class="caption">
+Figure 2.72: Feature Importance plot shows the root mean square error after 10 parmutation of every variable. Bars indicate the mean value of RMSE and at the ends of the bars are boxplots created from all permutation results.
+</p>
+</div>
+<p>Plot <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-FeatureImportance">2.72</a> show, <code>Median income</code> turns out to be the most important feature for the model under study. Removing the median income information by permutations, resulted in the largest decrease in the RMSE measure. This means that without this feature the model is much less precise.
+The geographic variables, <code>longitude</code> <code>latitude</code> and <code>ocean proximity</code> also turn out to be important for prediction.
+The average number of rooms, age, and the number of householders already have less impact on the prediction.
+The <code>mean bedrooms</code> category has the smallest and ambiguous impact. Whiskers extending beyond the left border of the bars indicate that there were draws where removing the variable improved the model results. The model may ignore this feature, having partial information about it in the form of number of rooms and household members.</p>
+<p>If we go back to <em>Break down</em> section, we can observe a few similarities. First of all, <code>median income</code> is very important for valuation in <em>Break down</em> and is in the first place in <em>feature importance’s</em> ranking. After that, on following places there are features related to geographic location. In general, they are important for <em>Break down</em> as well. If we take a look on
+bottom part of <em>feature importance</em> plot, three worst features - <code>mean bedrooms</code>, <code>population</code> and <code>households</code> have tiny contribution for both <em>Break down’s</em> cases. To sum up, these methods gives similar results and differences are due to different samples (one observation vs whole data set).</p>
+<p><strong>PDP</strong></p>
+<p>PDP <span class="citation">(<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#ref-xai1-pdp" role="doc-biblioref">Friedman 2000a</a>)</span> stands for partial dependence plot and it is connected with <em>Ceteris Paribus</em>. We take a random sample from data set, and calculate <em>ceteris paribus</em> for each one. After that, mean of all these functions is calculated, which leaves us with one profile for whole data set. In the plot below thick blue line is PDP and thin grey lines are <em>Ceteris Paribus</em> calculations for each observation.</p>
+<center>
+<div class="figure"><span id="fig:2-5-pdp"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-pdp.png" alt="Partial-dependance profiles (PDP). Grey lines are Ceteris Paribus profiles for each calculations, and blue line is PDP (mean of all Ceteris Paribus functions). The line indicates the change in prediction when the value of the variable changes. " width="100%">
+<p class="caption">
+Figure 2.73: Partial-dependance profiles (PDP). Grey lines are Ceteris Paribus profiles for each calculations, and blue line is PDP (mean of all Ceteris Paribus functions). The line indicates the change in prediction when the value of the variable changes.
+</p>
+</div>
+</center>
+<p>As we can see above <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-pdp">2.73</a>, <code>households</code>, <code>mean bedrooms</code>, <code>mean rooms</code> and <code>population</code> profiles are almost straight lines with fluctuations for small values. <code>Housing median value</code> is a interesting case, because small curvature can be observed at the end of line. This is probably due to the fact that new apartments are expensive, because they are modern and old ones are expensive because of historical background behind they. <code>Latitude</code> shows that most expensive houses are located on south, especially below <span class="math inline"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span id="MathJax-Element-4-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msup&gt;&lt;mn&gt;34&lt;/mn&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x2218;&lt;/mo&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 117%; position: relative;"><span id="MJXc-Node-13" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-14" class="mjx-mrow"><span id="MJXc-Node-15" class="mjx-msubsup"><span class="mjx-base"><span id="MJXc-Node-16" class="mjx-mn"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.377em; padding-bottom: 0.377em;">34</span></span></span><span class="mjx-sup" style="font-size: 70.7%; vertical-align: 0.607em; padding-left: 0px; padding-right: 0.071em;"><span id="MJXc-Node-17" class="mjx-texatom" style=""><span id="MJXc-Node-18" class="mjx-mrow"><span id="MJXc-Node-19" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.163em; padding-bottom: 0.323em;">∘</span></span></span></span></span></span><span id="MJXc-Node-20" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.483em; padding-bottom: 0.27em; padding-right: 0.085em;">N</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>34</mn><mrow class="MJX-TeXAtom-ORD"><mo>∘</mo></mrow></msup><mi>N</mi></math></span></span><script type="math/tex" id="MathJax-Element-4">34 ^{\circ} N</script></span>, in California this is area near Los Angeles. <code>Median house value</code> is highest for <code>longitude</code> values lower than <span class="math inline"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span id="MathJax-Element-5-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msup&gt;&lt;mn&gt;118&lt;/mn&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x2218;&lt;/mo&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 117%; position: relative;"><span id="MJXc-Node-21" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-22" class="mjx-mrow"><span id="MJXc-Node-23" class="mjx-msubsup"><span class="mjx-base"><span id="MJXc-Node-24" class="mjx-mn"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.377em; padding-bottom: 0.377em;">118</span></span></span><span class="mjx-sup" style="font-size: 70.7%; vertical-align: 0.591em; padding-left: 0px; padding-right: 0.071em;"><span id="MJXc-Node-25" class="mjx-texatom" style=""><span id="MJXc-Node-26" class="mjx-mrow"><span id="MJXc-Node-27" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.163em; padding-bottom: 0.323em;">∘</span></span></span></span></span></span><span id="MJXc-Node-28" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.483em; padding-bottom: 0.27em; padding-right: 0.026em;">E</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>118</mn><mrow class="MJX-TeXAtom-ORD"><mo>∘</mo></mrow></msup><mi>E</mi></math></span></span><script type="math/tex" id="MathJax-Element-5">118 ^{\circ} E</script></span> (majority of a state except of San Diego and surrounding area). As it was in <em>ceteris paribus</em>, <code>median income</code> grows together with <code>median house value</code> to the level where income money simply doesn’t matter.</p>
+<center>
+<div class="figure"><span id="fig:2-5-pdp-groups"></span>
+<img src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/2-5-pdp-groups.png" alt="Partial-dependence profiles for separate ocean proximity values. Each line of a different color corresponds to a PDP for observations belonging to one category." width="100%">
+<p class="caption">
+Figure 2.74: Partial-dependence profiles for separate ocean proximity values. Each line of a different color corresponds to a PDP for observations belonging to one category.
+</p>
+</div>
+</center>
+<p>PDP makes it possible to create separate profiles for different groups of observation. In our case, we used <code>ocean proximity</code> as it is a categorical variable. In the plot <a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#fig:2-5-pdp-groups">2.74</a> above we can observe, that all profiles are similar to each other, the only significant difference is vertical shift. Conclusion drawn from this plot is the fact that houses <code>1h &lt;Ocean</code> are most expensive, <code>inland</code> apartments are the cheapest, while <code>near ocean</code> and <code>near bay</code> behave similar to each other and have average prices. If we take a look at the plot from <em>Data</em> paragraph, conclusions look reasonable. <code>1h &lt;Ocean</code> houses are the ones located in Los Angeles and in the suburbs of San Francisco, which are well known from expensive neighborhoods.</p>
+<p><strong>Global explanations conclusions</strong></p>
+<p>In contrast to local explanations, global explanations give a more general picture of the entire data set. With PDP profiles, we can see the relationships between the data. The future importance graph allows understanding what variables are relevant to the model.</p>
+</div>
+<div id="conclusion" class="section level3" number="2.5.6">
+<h3 class="hasAnchor"><span class="header-section-number">2.5.6</span> Conclusion<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#conclusion" class="anchor-section"></a></h3>
+<p>XAI methods can have multiple applications. They allow to study the behavior of Machine Learning Models. It gives an opportunity to understand the model, detect errors, for example, made during data preprocessing.With a good model matched to the data, XAI can be used to study the dependencies in the data.</p>
+<p>In this paper using XAI methods we made local and global explanations for the random forest model and 1990 California house data. This allowed us to bring the black box model closer to an interpretable as we learned the approximate effects of the variables on the prediction output. All the methods we used, Break Down, Lime, Ceteris Paribus for local explanations and Feature Importance, PDP for global explanations, indicated <code>median income</code> as the variable with the greatest influence on the prediction score. By combining the XAI methods with the results of the EDA analysis, we were able to observe and intuitively explain the findings.</p>
+<p>In the local explanations section we took a closer look at two very different observations and tested at the observation level how their variable values, affected the prediction outcome, and in the global explanations section we took a broader look at the performance of the model for the whole data set.</p>
+<p>In summary, our results provide insight into the value of using XAI methods to better understand black box models used for real-world problems such as, in our case, the real estate market and the impact of location-specific factors on house price.</p>
+
+</div>
+</div>
+<!-- </div> -->
+<h3 class="hasAnchor">References<a href="https://mi2-education.github.io/2021L-WB-Book/how-the-price-of-the-house-is-influenced-by-neighborhood-xai-methods-for-interpretation-the-black-box-model.html#section-" class="anchor-section"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-2-5-againstxai3" class="csl-entry">
+Aivodji, U., Arai, H., Fortineau, O., Gambs, S., Hara, S., &amp; Tapp, A. (2019). Fairwashing: The risk of rationalization. In K. Chaudhuri &amp; R. Salakhutdinov (Eds.), <em>Proceedings of the 36th international conference on machine learning</em> (Vol. 97, pp. 161–170). PMLR.<a href="http://proceedings.mlr.press/v97/aivodji19a.html"> http://proceedings.mlr.press/v97/aivodji19a.html</a>
+</div>
+<div id="ref-dalex" class="csl-entry">
+Baniecki, H., Kretowicz, W., Piatyszek, P., Wisniewski, J., &amp; Biecek, P. (2020a). <span class="nocase">dalex: Responsible Machine Learning with Interactive Explainability and Fairness in Python</span>. <em>arXiv:2012.14406</em>. <a href="https://arxiv.org/abs/2012.14406">https://arxiv.org/abs/2012.14406</a>
+</div>
+<div id="ref-2-5-XAI" class="csl-entry">
+Barredo Arrieta, A., Díaz-Rodríguez, N., Del Ser, J., Bennetot, A., Tabik, S., Barbado, A., et al. (2020b). Explainable artificial intelligence (XAI): Concepts, taxonomies, opportunities and challenges toward responsible AI. <em>Information Fusion</em>, <em>58</em>, 82–115. <a href="http://www.sciencedirect.com/science/article/pii/S1566253519308103">http://www.sciencedirect.com/science/article/pii/S1566253519308103</a>
+</div>
+<div id="ref-2-3-dalex" class="csl-entry">
+Biecek, Przemyslaw. (2018a). <span class="nocase">DALEX: Explainers for Complex Predictive Models in R</span>. <em>Journal of Machine Learning Research</em>, <em>19</em>(84), 1–5. <a href="http://jmlr.org/papers/v19/18-416.html">http://jmlr.org/papers/v19/18-416.html</a>
+</div>
+<div id="ref-EMA" class="csl-entry">
+Biecek, Przemyslaw, &amp; Burzykowski, T. (2021a). <em><span>Explanatory Model Analysis</span></em>. Chapman; Hall/CRC, New York. <a href="https://pbiecek.github.io/ema/">https://pbiecek.github.io/ema/</a>
+</div>
+<div id="ref-2-5-breiman1999random" class="csl-entry">
+Breiman, L. (1999). Random forests. <em>UC Berkeley TR567</em>.
+</div>
+<div id="ref-2-5-neighborhood3" class="csl-entry">
+Can, A. (1990). The measurement of neighborhood dynamics in urban house prices. <em>Economic Geography</em>, <em>66</em>(3), 254–272. <a href="https://doi.org/10.2307/143400">https://doi.org/10.2307/143400</a>
+</div>
+<div id="ref-2-5-houseprediction-2" class="csl-entry">
+Conway, J. (2018, January). <em><span class="nocase">Artificial Intelligence and Machine Learning : Current Applications in Real Estate</span></em> (PhD thesis). Retrieved from <a href="https://dspace.mit.edu/bitstream/handle/1721.1/120609/1088413444-MIT.pdf">https://dspace.mit.edu/bitstream/handle/1721.1/120609/1088413444-MIT.pdf</a>
+</div>
+<div id="ref-2-5-neighborhood4" class="csl-entry">
+Dubin, R. A. (1998). Predicting house prices using multiple listings data. <em>The Journal of Real Estate Finance and Economics</em>. <a href="https://doi.org/10.1023/A:1007751112669">https://doi.org/10.1023/A:1007751112669</a>
+</div>
+<div id="ref-2-5-houseprediction-1" class="csl-entry">
+Fan, C., Cui, Z., &amp; Zhong, X. (2018). House prices prediction with machine learning algorithms. In <em>Proceedings of the 2018 10th international conference on machine learning and computing</em> (pp. 6–10). New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/3195106.3195133">https://doi.org/10.1145/3195106.3195133</a>
+</div>
+<div id="ref-2-5-fisher2019all" class="csl-entry">
+Fisher, A., Rudin, C., &amp; Dominici, F. (2019c). All models are wrong, but many are useful: Learning a variable’s importance by studying an entire class of prediction models simultaneously. <em>Journal of Machine Learning Research</em>, <em>20</em>(177), 1–81.
+</div>
+<div id="ref-xai1-pdp" class="csl-entry">
+Friedman, J. H. (2000a). Greedy function approximation: A gradient boosting machine. <em>Annals of Statistics</em>, <em>29</em>, 1189–1232.
+</div>
+<div id="ref-2-5-housingprediction-ml2" class="csl-entry">
+Ge, X., Runeson, G., &amp; Lam, K. C. (2021). Forecasting hong kong housing prices: An artificial neural network approach.
+</div>
+<div id="ref-2-5-iBreakDown" class="csl-entry">
+Gosiewska, A., &amp; Biecek, P. (2019b). <span>Do Not Trust Additive Explanations</span>. <em>arXiv</em>. <a href="https://arxiv.org/abs/1903.11420v3">https://arxiv.org/abs/1903.11420v3</a>
+</div>
+<div id="ref-2-5-neighborhood2" class="csl-entry">
+Heyman, A., &amp; Sommervoll, D. (2019). House prices and relative location. <em>Cities</em>, <em>95</em>, 102373. <a href="https://doi.org/10.1016/j.cities.2019.06.004">https://doi.org/10.1016/j.cities.2019.06.004</a>
+</div>
+<div id="ref-2-5-neighborhood1" class="csl-entry">
+Law, S. (2017). Defining street-based local area and measuring its effect on house price using a hedonic price approach: The case study of metropolitan london. <em>Cities</em>, <em>60</em>, 166–179. <a href="https://doi.org/10.1016/j.cities.2016.08.008">https://doi.org/10.1016/j.cities.2016.08.008</a>
+</div>
+<div id="ref-2-5-randomForest-lib" class="csl-entry">
+Liaw, A., &amp; Wiener, M. (2002b). Classification and regression by randomForest. <em>R News</em>, <em>2</em>(3), 18–22. <a href="https://cran.r-project.org/doc/Rnews/">https://CRAN.R-project.org/doc/Rnews/</a>
+</div>
+<div id="ref-2-5-xailandscape" class="csl-entry">
+Maksymiuk, S., Gosiewska, A., &amp; Biecek, P. (2020b). Landscape of r packages for eXplainable artificial intelligence. <em>arXiv</em>. <a href="https://arxiv.org/abs/2009.13248">https://arxiv.org/abs/2009.13248</a>
+</div>
+<div id="ref-2-5-pace1997sparse" class="csl-entry">
+Pace, R. K., &amp; Barry, R. (1997). Sparse spatial autoregressions. <em>Statistics &amp; Probability Letters</em>, <em>33</em>(3), 291–297.
+</div>
+<div id="ref-2-5-housingprediction-ml1" class="csl-entry">
+Park, B., &amp; Bae, J. (2015). <span class="nocase">Using machine learning algorithms for housing price prediction: The case of Fairfax County, Virginia housing data</span>. <em>Expert Systems with Applications</em>, <em>42</em>. <a href="https://doi.org/10.1016/j.eswa.2014.11.040">https://doi.org/10.1016/j.eswa.2014.11.040</a>
+</div>
+<div id="ref-2-5-explanations" class="csl-entry">
+Plumb, G., Molitor, D., &amp; Talwalkar, A. (2019). Model agnostic supervised local explanations. <a href="https://arxiv.org/abs/1807.02910">https://arxiv.org/abs/1807.02910</a>
+</div>
+<div id="ref-2-5-lime" class="csl-entry">
+Ribeiro, M. T., Singh, S., &amp; Guestrin, C. (2016b). <span class="nocase">"Why Should <span>I</span> Trust You?": Explaining the Predictions of Any Classifier</span>. In <em>Proceedings of the 22nd <span>ACM</span> <span>SIGKDD</span> international conference on knowledge discovery and data mining, san francisco, CA, USA, august 13-17, 2016</em> (pp. 1135–1144). <a href="https://doi.org/10.18653/v1/n16-3020">https://doi.org/10.18653/v1/n16-3020</a>
+</div>
+<div id="ref-2-5-againstxai2" class="csl-entry">
+Rudin, C. (2019b). Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead. <em>Nature Machine Intelligence</em>, <em>1</em>(5), 206–215. <a href="https://doi.org/10.1038/s42256-019-0048-x">https://doi.org/10.1038/s42256-019-0048-x</a>
+</div>
+<div id="ref-2-5-againstxai1" class="csl-entry">
+Slack, D., Hilgard, S., Jia, E., Singh, S., &amp; Lakkaraju, H. (2020). Fooling LIME and SHAP: Adversarial attacks on post hoc explanation methods. In <em>Proceedings of the AAAI/ACM conference on AI, ethics, and society</em> (pp. 180–186). New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/3375627.3375830">https://doi.org/10.1145/3375627.3375830</a>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="https://mi2-education.github.io/2021L-WB-Book/explaining-diabetes-indicators.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="https://mi2-education.github.io/2021L-WB-Book/deep-learning-1.html" class="navigation navigation-next " aria-label="Next page" style="margin-right: 17px;"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/app.min.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/lunr.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/clipboard.min.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-search.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-sharing.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-fontsettings.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-bookdown.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/jquery.highlight.js.pobrane"></script>
+<script src="./2.5 How the price of the house is influenced by neighborhood_ XAI methods for interpretation the black box model _ Case Studies_files/plugin-clipboard.js.pobrane"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/mini-pw/2021L-WB-Book/edit/master/2-5-california.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["book.pdf", "book.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+
+</body></html>
